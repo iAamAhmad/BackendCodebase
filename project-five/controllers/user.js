@@ -11,16 +11,17 @@ const createData = async () => {
       resizeBy.json(todo)
    }
    catch (error) {
-resizeBy.status(500).json({error:error.message})
+      resizeBy.status(500).json({ error: error.message })
    }
 }
-const getAllData=(req,)=>{
-   try{
-     const getTodos=await Todo.find({
-      res.json(getTodos)
-     })
+const getAllData = (req,) => {
+   try {
+      const getTodos = await Todo.find({
+         res.json(getTodos)
+         //function!
+      })
    }
-   catch(){
+   catch () {
 
    }
 }
