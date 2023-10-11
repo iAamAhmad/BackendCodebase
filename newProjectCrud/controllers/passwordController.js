@@ -1,16 +1,17 @@
 const bcrypt = require('bcrypt');
 const userModel = require('../models/loginSystem');
-const passwordResetModel = require('../models/passwordReset');
+const passwordResetModel = require('../models/passwordModel');
 const jwt = require('jsonwebtoken');
 
 const requestPasswordReset = async (req, res) => {
    try {
       const { email } = req.body;
       const user = await userModel.findOne({ email });
+      const secretKey = crypto.randomBytes(32).toString('hex');
       if (!user) {
          return res.status(404).json({ error: 'User not found' });
       }
-      const token = jwt.sign({ userId: user.id }, 'YOUR_SECRET_KEY', { expiresIn: '1hr' });
+      const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1hr' });
 
       //* Creating a password reset request
       const resetRequest = new passwordResetModel({
@@ -20,9 +21,6 @@ const requestPasswordReset = async (req, res) => {
       });
 
       await resetRequest.save();
-
-      // TODO: Send an email to the user with the reset token and instructions
-
       res.status(200).json({ message: 'Password reset email sent successfully' });
    } catch (error) {
       res.status(500).json({ error: error.message });
