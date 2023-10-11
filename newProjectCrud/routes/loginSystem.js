@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const loginSystemController = require('../controllers/loginSystem');
-const passwordResetController = require('../controllers/passwordReset'); 
+const passwordResetController = require('../controllers/passwordController'); 
 
 router.post('/signUp', loginSystemController.signUpUser);
 router.post('/signIn', loginSystemController.loginUser);
